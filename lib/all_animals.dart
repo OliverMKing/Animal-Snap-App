@@ -1,10 +1,13 @@
+import 'package:camera/camera.dart';
 import "package:flutter/material.dart";
 import 'constants.dart';
+import 'camera.dart';
 
 class AllAnimals extends StatelessWidget {
-  AllAnimals(this.animals);
+  AllAnimals(this.animals, this.firstCamera);
 
   final animals;
+  final CameraDescription firstCamera;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,10 @@ class AllAnimals extends StatelessWidget {
         backgroundColor: kMainColor,
         child: Icon(Icons.camera_enhance),
         onPressed: () {
-          print("Pressed");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Camera(firstCamera)),
+          );
         },
       ),
       body: SafeArea(
@@ -55,7 +61,7 @@ class AllAnimals extends StatelessWidget {
                 tag: "bottom",
                 child: Container(
                   width: double.infinity,
-                  padding: EdgeInsets.only(top: 5),
+                  padding: EdgeInsets.only(top: 10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -71,8 +77,8 @@ class AllAnimals extends StatelessWidget {
                               Text("${(index + 1).toString().padLeft(3, '0')}"),
                           title: Text('${animals[index]["name"]}'),
                           trailing: Icon(
-                            Icons.check,
-                            color: Colors.green,
+                            Icons.close,
+                            color: Colors.red,
                           ),
                         ));
                       }),
