@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainContainer extends StatelessWidget {
+class HomePage extends StatelessWidget {
   // Main color of background
   final Color fMainColor = Colors.greenAccent;
 
