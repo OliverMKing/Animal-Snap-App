@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import "all_animals.dart";
+import 'constants.dart';
 
-class HomePage extends StatelessWidget {
-  // Main color of background
-  final Color fMainColor = Colors.greenAccent;
-
+// The home page of the application
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: fMainColor,
+      backgroundColor: kMainColor,
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,24 +37,31 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Material(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-              child: InkWell(
-                onTap: () {
-                  print("Pressed");
-                },
-                child: Container(
-                  height: 150,
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Center(
-                      child: Icon(
-                    Icons.play_arrow,
-                    size: 70,
-                    color: fMainColor,
-                  )),
+            Hero(
+              tag: "bottom",
+              child: Material(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AllAnimals()),
+                    );
+                  },
+                  child: Container(
+                    height: 150,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Center(
+                        child: Icon(
+                      Icons.play_arrow,
+                      size: 70,
+                      color: kMainColor,
+                    )),
+                  ),
                 ),
               ),
             ),
