@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "all_animals.dart";
 import 'constants.dart';
+import 'package:http/http.dart' as http;
 
 // The home page of the application
 class Home extends StatelessWidget {
@@ -45,10 +48,14 @@ class Home extends StatelessWidget {
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
+                    var animals = await fetchAnimals();
+
+                    // Open all animals page
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AllAnimals()),
+                      MaterialPageRoute(
+                          builder: (context) => AllAnimals(animals)),
                     );
                   },
                   child: Container(
@@ -69,5 +76,17 @@ class Home extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future fetchAnimals() async {
+  final response = await http.get('http://159.65.231.125:5000/api/animals');
+
+  if (response.statusCode == 200) {
+    // If server returns an OK response, parse the JSON.
+    return jsonDecode(response.body);
+  } else {
+    // If that response was not OK, throw an error.
+    throw Exception('Failed to load animals. ${response.statusCode}');
   }
 }
