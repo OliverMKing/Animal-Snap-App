@@ -90,64 +90,72 @@ class _AllAnimalsState extends State<AllAnimals> {
                             var name = widget.animals[index]["name"];
                             bool seen = widget.prefs.containsKey(name);
 
-                            return Card(
-                              child: InkWell(
-                                onTap: () {
-                                  if (!seen) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          // return object of type Dialog
-                                          return AlertDialog(
-                                            title: new Text("Animal Not Seen"),
-                                            content: new Text(
-                                                "You must take a picture of an animal to see its stats."),
-                                            actions: <Widget>[
-                                              // usually buttons at the bottom of the dialog
-                                              new FlatButton(
-                                                child: new Text("OK"),
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  } else {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Animal(
-                                                widget.animals[index],
-                                                (index + 1)
-                                                    .toString()
-                                                    .padLeft(3, '0'))));
-                                  }
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        "${(index + 1).toString().padLeft(3, '0')}",
-                                        style: TextStyle(
-                                            fontSize: 15, color: Colors.grey),
-                                      ),
-                                      SizedBox(width: 45),
-                                      Text(
-                                        '$name',
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      Expanded(child: SizedBox()),
-                                      Icon(
-                                        seen ? Icons.check : Icons.clear,
-                                        color:
-                                            seen ? Colors.green : Colors.grey,
-                                      ),
-                                    ],
+                            return Container(
+                              padding: EdgeInsets.only(
+                                  bottom: (widget.animals.length - 1 == index)
+                                      ? 70
+                                      : 0),
+                              child: Card(
+                                child: InkWell(
+                                  onTap: () {
+                                    if (!seen) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            // return object of type Dialog
+                                            return AlertDialog(
+                                              title:
+                                                  new Text("Animal Not Seen"),
+                                              content: new Text(
+                                                  "You must take a picture of an animal to see its stats."),
+                                              actions: <Widget>[
+                                                // usually buttons at the bottom of the dialog
+                                                new FlatButton(
+                                                  child: new Text("OK"),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    } else {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Animal(
+                                                  widget.animals[index],
+                                                  (index + 1)
+                                                      .toString()
+                                                      .padLeft(3, '0'))));
+                                    }
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "${(index + 1).toString().padLeft(3, '0')}",
+                                          style: TextStyle(
+                                              fontSize: 15, color: Colors.grey),
+                                        ),
+                                        SizedBox(width: 45),
+                                        Text(
+                                          '$name',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        Expanded(child: SizedBox()),
+                                        Icon(
+                                          seen ? Icons.check : Icons.clear,
+                                          color:
+                                              seen ? Colors.green : Colors.grey,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
