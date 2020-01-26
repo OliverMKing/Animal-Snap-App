@@ -91,22 +91,23 @@ class _AllAnimalsState extends State<AllAnimals> {
                               child: Container(
                                 padding: EdgeInsets.all(10),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
                                       "${(index + 1).toString().padLeft(3, '0')}",
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.grey),
                                     ),
+                                    SizedBox(width: 60),
                                     Text(
                                       '$name',
                                       style: TextStyle(fontSize: 20),
                                     ),
-                                    SizedBox(width: 20),
+                                    Expanded(child: SizedBox()),
                                     Icon(
-                                      seen ? Icons.check : Icons.close,
-                                      color: seen ? Colors.green : Colors.red,
+                                      seen ? Icons.check : Icons.clear,
+                                      color: seen ? Colors.green : Colors.grey,
                                     ),
                                   ],
                                 ),
