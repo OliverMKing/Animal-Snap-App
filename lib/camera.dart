@@ -7,6 +7,7 @@ import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'dart:convert';
 
 class Camera extends StatefulWidget {
   Camera(this.firstCamera);
@@ -20,6 +21,7 @@ class Camera extends StatefulWidget {
 class _CameraState extends State<Camera> {
   CameraController _controller;
   Future<void> _initializeControllerFuture;
+  bool _disabledButton = false;
 
   @override
   void initState() {
@@ -79,36 +81,72 @@ class _CameraState extends State<Camera> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera_enhance),
-        backgroundColor: kMainColor,
-        onPressed: () async {
-          try {
-            await _initializeControllerFuture;
+      floatingActionButton: Opacity(
+        opacity: _disabledButton ? 0.0 : 1.0,
+        child: FloatingActionButton(
+          child: Icon(Icons.camera_enhance),
+          backgroundColor: kMainColor,
+          onPressed: () async {
+            try {
+              if (_disabledButton) {
+                return;
+              }
 
-            final path = join(
-              (await getTemporaryDirectory()).path,
-              '${DateTime.now()}.png',
-            );
+              this.setState(() {
+                _disabledButton = true;
+              });
 
-            await _controller.takePicture(path);
+              await _initializeControllerFuture;
 
-            print("Picture taken");
+              final path = join(
+                (await getTemporaryDirectory()).path,
+                '${DateTime.now()}.png',
+              );
 
-            // Submit picture
-            var postUri = Uri.parse("http://159.65.231.125:5000/api/path");
-            var request = new http.MultipartRequest("POST", postUri);
-            request.files.add(new http.MultipartFile.fromBytes(
-                'file', await File.fromUri(Uri.parse(path)).readAsBytes(),
-                contentType: new MediaType('avatar', 'jpeg')));
+              await _controller.takePicture(path);
 
-            request.send().then((response) {
-              if (response.statusCode == 200) print("Uploaded!");
-            });
-          } catch (e) {
-            print(e);
-          }
-        },
+              // Submit picture
+              String base64Image =
+                  base64Encode(File.fromUri(Uri.parse(path)).readAsBytesSync());
+
+              http.post("http://159.65.231.125:5000/api/path", body: {
+                "image": base64Image,
+                "name": "image",
+              }).then((res) async {
+                if (res.statusCode == 200) {
+                  print(res.body);
+                } else {
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      // return object of type Dialog
+                      return AlertDialog(
+                        title: new Text("Animal Not Recognized"),
+                        content: new Text("Please retake your picture"),
+                        actions: <Widget>[
+                          // usually buttons at the bottom of the dialog
+                          new FlatButton(
+                            child: new Text("Ok"),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+                setState(() {
+                  _disabledButton = false;
+                });
+              }).catchError((err) {
+                print(err);
+              });
+            } catch (e) {
+              print(e);
+            }
+          },
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
