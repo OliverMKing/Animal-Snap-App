@@ -44,7 +44,7 @@ class Home extends StatelessWidget {
                   ),
                   Icon(
                     Icons.camera_enhance,
-                    size: 100,
+                    size: 120,
                     color: Colors.white,
                   ),
                 ],
@@ -68,7 +68,7 @@ class Home extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    height: 200,
+                    height: 150,
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Center(
