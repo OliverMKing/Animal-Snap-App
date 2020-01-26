@@ -1,15 +1,17 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import "all_animals.dart";
 import 'constants.dart';
 
 // The home page of the application
 class Home extends StatelessWidget {
-  Home(this.firstCamera, this.animals);
+  Home(this.firstCamera, this.animals, this.prefs);
 
   final CameraDescription firstCamera;
   final animals;
+  final SharedPreferences prefs;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class Home extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              AllAnimals(animals, firstCamera)),
+                              AllAnimals(animals, firstCamera, prefs)),
                     );
                   },
                   child: Container(

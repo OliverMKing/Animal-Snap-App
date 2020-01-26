@@ -3,13 +3,21 @@ import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'constants.dart';
 import 'camera.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
-class AllAnimals extends StatelessWidget {
-  AllAnimals(this.animals, this.firstCamera);
+class AllAnimals extends StatefulWidget {
+  AllAnimals(this.animals, this.firstCamera, this.prefs);
 
   final animals;
   final CameraDescription firstCamera;
+  final SharedPreferences prefs;
 
+  @override
+  _AllAnimalsState createState() => _AllAnimalsState();
+}
+
+class _AllAnimalsState extends State<AllAnimals> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +28,7 @@ class AllAnimals extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Camera(firstCamera)),
+            MaterialPageRoute(builder: (context) => Camera(widget.firstCamera)),
           );
         },
       ),
@@ -49,7 +57,7 @@ class AllAnimals extends StatelessWidget {
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       Text(
-                        "0 / ${animals.length}",
+                        "${widget.prefs.getKeys().length} / ${widget.animals.length}",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ],
@@ -74,8 +82,11 @@ class AllAnimals extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.only(right: 10),
                       child: ListView.builder(
-                          itemCount: animals.length,
+                          itemCount: widget.animals.length,
                           itemBuilder: (BuildContext context, int index) {
+                            var name = widget.animals[index]["name"];
+                            bool seen = widget.prefs.containsKey(name);
+
                             return Card(
                               child: Container(
                                 padding: EdgeInsets.all(10),
@@ -89,13 +100,13 @@ class AllAnimals extends StatelessWidget {
                                       style: TextStyle(fontSize: 20),
                                     ),
                                     Text(
-                                      '${animals[index]["name"]}',
+                                      '$name',
                                       style: TextStyle(fontSize: 20),
                                     ),
                                     SizedBox(width: 20),
                                     Icon(
-                                      Icons.close,
-                                      color: Colors.red,
+                                      seen ? Icons.check : Icons.close,
+                                      color: seen ? Colors.green : Colors.red,
                                     ),
                                   ],
                                 ),

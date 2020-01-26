@@ -29,6 +29,7 @@ dependencies:
   camera:
   path_provider:
   path:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

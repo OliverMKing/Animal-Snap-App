@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Camera extends StatefulWidget {
   Camera(this.firstCamera);
@@ -115,8 +116,10 @@ class _CameraState extends State<Camera> {
               }).then((res) async {
                 if (res.statusCode == 200 &&
                     json.decode(res.body)["animal"] != null) {
-                  print(res.body);
-                  print(json.decode(res.body)["animal"]["name"]);
+                  var animal = json.decode(res.body)["animal"]["name"];
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setBool(animal, true);
                 } else {
                   await showDialog(
                     context: context,

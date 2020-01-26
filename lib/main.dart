@@ -9,6 +9,7 @@ import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -24,12 +25,14 @@ Future<void> main() async {
   // Get a list of animals
   final animals = await fetchAnimals();
 
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
   runApp(MaterialApp(
     title: 'Animal Snap',
     theme: ThemeData(
       primarySwatch: Colors.green,
     ),
-    home: Home(firstCamera, animals),
+    home: Home(firstCamera, animals, prefs),
   ));
 }
 
