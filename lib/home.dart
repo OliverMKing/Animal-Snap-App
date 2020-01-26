@@ -63,7 +63,7 @@ class Home extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    height: 150,
+                    height: 200,
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Center(
@@ -71,7 +71,7 @@ class Home extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Icon(
-                          Icons.arrow_right,
+                          Icons.chevron_right,
                           size: 125,
                           color: kMainColor,
                         )
