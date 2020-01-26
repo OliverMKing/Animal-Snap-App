@@ -67,10 +67,15 @@ class Home extends StatelessWidget {
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Center(
-                        child: Icon(
-                      Icons.play_arrow,
-                      size: 70,
-                      color: kMainColor,
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.arrow_right,
+                          size: 125,
+                          color: kMainColor,
+                        )
+                      ],
                     )),
                   ),
                 ),
