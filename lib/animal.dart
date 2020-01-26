@@ -56,13 +56,15 @@ class Animal extends StatelessWidget {
                     )
                   ],
                 ),
-                Container(
-                    padding:
-                        EdgeInsets.only(top: 20.0, right: 15.0, bottom: 20.0),
-                    child: Image.network(
-                      animal["image-url"],
-                      width: 150,
-                    ))
+                Expanded(
+                  child: Container(
+                      padding:
+                          EdgeInsets.only(top: 20.0, right: 15.0, bottom: 20.0),
+                      child: Image.network(
+                        animal["image-url"],
+                        fit: BoxFit.scaleDown,
+                      )),
+                )
               ],
             ),
             Expanded(
