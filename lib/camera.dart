@@ -9,11 +9,13 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'animal.dart';
 
 class Camera extends StatefulWidget {
-  Camera(this.firstCamera);
+  Camera(this.firstCamera, this.animals);
 
   final CameraDescription firstCamera;
+  final animals;
 
   @override
   _CameraState createState() => _CameraState();
@@ -120,6 +122,20 @@ class _CameraState extends State<Camera> {
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   await prefs.setBool(animal, true);
+
+                  int index = 0;
+                  for (int i = 0; i < widget.animals.length; i++) {
+                    if (widget.animals[i]["name"] == animal) {
+                      index = i;
+                      break;
+                    }
+                  }
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Animal(widget.animals[index],
+                              (index + 1).toString().padLeft(3, '0'))));
                 } else {
                   await showDialog(
                     context: context,

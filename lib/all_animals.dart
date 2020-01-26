@@ -5,6 +5,7 @@ import 'constants.dart';
 import 'camera.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
+import 'animal.dart';
 
 class AllAnimals extends StatefulWidget {
   AllAnimals(this.animals, this.firstCamera, this.prefs);
@@ -28,7 +29,9 @@ class _AllAnimalsState extends State<AllAnimals> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Camera(widget.firstCamera)),
+            MaterialPageRoute(
+                builder: (context) =>
+                    Camera(widget.firstCamera, widget.animals)),
           );
         },
       ),
@@ -110,9 +113,16 @@ class _AllAnimalsState extends State<AllAnimals> {
                                             ],
                                           );
                                         });
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Animal(
+                                                widget.animals[index],
+                                                (index + 1)
+                                                    .toString()
+                                                    .padLeft(3, '0'))));
                                   }
-
-                                  print("Pressed");
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(10),
@@ -126,7 +136,7 @@ class _AllAnimalsState extends State<AllAnimals> {
                                         style: TextStyle(
                                             fontSize: 15, color: Colors.grey),
                                       ),
-                                      SizedBox(width: 60),
+                                      SizedBox(width: 45),
                                       Text(
                                         '$name',
                                         style: TextStyle(fontSize: 20),
