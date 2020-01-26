@@ -36,7 +36,7 @@ class Home extends StatelessWidget {
                     "Animal Snap",
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 60,
+                        fontSize: 55,
                         fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
