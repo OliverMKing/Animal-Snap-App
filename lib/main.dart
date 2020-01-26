@@ -28,6 +28,7 @@ Future<void> main() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     title: 'Animal Snap',
     theme: ThemeData(
       primarySwatch: Colors.green,
