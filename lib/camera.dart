@@ -113,8 +113,10 @@ class _CameraState extends State<Camera> {
                 "image": base64Image,
                 "name": "image",
               }).then((res) async {
-                if (res.statusCode == 200) {
+                if (res.statusCode == 200 &&
+                    json.decode(res.body)["animal"] != null) {
                   print(res.body);
+                  print(json.decode(res.body)["animal"]["name"]);
                 } else {
                   await showDialog(
                     context: context,
@@ -126,7 +128,7 @@ class _CameraState extends State<Camera> {
                         actions: <Widget>[
                           // usually buttons at the bottom of the dialog
                           new FlatButton(
-                            child: new Text("Ok"),
+                            child: new Text("OK"),
                             onPressed: () {
                               Navigator.pop(context);
                             },
