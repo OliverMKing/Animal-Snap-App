@@ -58,7 +58,7 @@ class Animal extends StatelessWidget {
                 ),
                 Container(
                     padding:
-                        EdgeInsets.only(top: 20.0, right: 30.0, bottom: 20.0),
+                        EdgeInsets.only(top: 20.0, right: 15.0, bottom: 20.0),
                     child: Image.network(
                       animal["image-url"],
                       width: 150,
@@ -85,9 +85,14 @@ class Animal extends StatelessWidget {
                           child: SingleChildScrollView(
                             child: Container(
                               padding: EdgeInsets.only(right: 10),
-                              child: Text(
-                                "${animal["description"]}",
-                                style: TextStyle(fontSize: 20),
+                              child: RichText(
+                                text: TextSpan(
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: '${animal["description"]}'),
+                                    ],
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black)),
                               ),
                             ),
                           ),
