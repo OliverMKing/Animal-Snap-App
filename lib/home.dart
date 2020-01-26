@@ -18,6 +18,11 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: kMainColor,
       body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage("assets/images/bg.jpg"),
+        )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

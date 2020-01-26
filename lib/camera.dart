@@ -53,35 +53,42 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kMainColor,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(
-                  top: 20.0, left: 30.0, right: 30.0, bottom: 20.00),
-              child: Text(
-                "Take a Picture of the Animal",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w500),
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage("assets/images/bg.jpg"),
+        )),
+        child: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(
+                    top: 20.0, left: 30.0, right: 30.0, bottom: 20.00),
+                child: Text(
+                  "Take a Picture of the Animal",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
-            ),
-            Expanded(
-              child: FutureBuilder<void>(
-                future: _initializeControllerFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    // If the Future is complete, display the preview.
-                    return CameraPreview(_controller);
-                  } else {
-                    // Otherwise, display a loading indicator.
-                    return Center(child: CircularProgressIndicator());
-                  }
-                },
+              Expanded(
+                child: FutureBuilder<void>(
+                  future: _initializeControllerFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      // If the Future is complete, display the preview.
+                      return CameraPreview(_controller);
+                    } else {
+                      // Otherwise, display a loading indicator.
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: Opacity(
