@@ -127,7 +127,7 @@ class _CameraState extends State<Camera> {
                       // return object of type Dialog
                       return AlertDialog(
                         title: new Text("Animal Not Recognized"),
-                        content: new Text("Please retake your picture"),
+                        content: new Text("Please retake your picture."),
                         actions: <Widget>[
                           // usually buttons at the bottom of the dialog
                           new FlatButton(
